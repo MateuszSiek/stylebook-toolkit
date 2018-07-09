@@ -1,0 +1,177 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "stylebook-toolkit-app": {
+      "root": "",
+      "sourceRoot": "projects/stylebook-toolkit-demo",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/stylebook-toolkit-app",
+            "index": "projects/stylebook-toolkit-demo/index.html",
+            "main": "projects/stylebook-toolkit-demo/main.ts",
+            "polyfills": "projects/stylebook-toolkit-demo/polyfills.ts",
+            "tsConfig": "projects/stylebook-toolkit-demo/tsconfig.app.json",
+            "assets": [
+              "projects/stylebook-toolkit-demo/favicon.ico",
+              "projects/stylebook-toolkit-demo/assets",
+              "projects/stylebook-toolkit-demo/app"
+            ],
+            "styles": [
+              "projects/stylebook-toolkit-demo/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/stylebook-toolkit-demo/environments/environment.ts",
+                  "with": "projects/stylebook-toolkit-demo/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "stylebook-toolkit-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "stylebook-toolkit-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "stylebook-toolkit-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stylebook-toolkit-demo/test.ts",
+            "polyfills": "projects/stylebook-toolkit-demo/polyfills.ts",
+            "tsConfig": "projects/stylebook-toolkit-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/stylebook-toolkit-demo/karma.conf.js",
+            "styles": [
+              "projects/stylebook-toolkit-demo/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/stylebook-toolkit-demo/favicon.ico",
+              "projects/stylebook-toolkit-demo/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stylebook-toolkit-demo/tsconfig.app.json",
+              "projects/stylebook-toolkit-demo/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stylebook-toolkit-app-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "stylebook-toolkit-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "stylebook-toolkit-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stylebook-toolkit": {
+      "root": "projects/stylebook-toolkit",
+      "sourceRoot": "projects/stylebook-toolkit/src",
+      "projectType": "library",
+      "prefix": "st",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stylebook-toolkit/tsconfig.lib.json",
+            "project": "projects/stylebook-toolkit/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/stylebook-toolkit/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stylebook-toolkit/src/test.ts",
+            "tsConfig": "projects/stylebook-toolkit/tsconfig.spec.json",
+            "karmaConfig": "projects/stylebook-toolkit/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stylebook-toolkit/tsconfig.lib.json",
+              "projects/stylebook-toolkit/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "stylebook-toolkit-app"
+}

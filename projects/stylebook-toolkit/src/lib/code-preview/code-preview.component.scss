@@ -1,0 +1,46 @@
+.st-preview {
+    position: relative;
+    border: 1px dashed gray;
+    margin: 0.5rem;
+}
+
+.st-preview__title,
+.st-preview__code-samples-title {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0.1rem;
+}
+
+.st-preview--show-preview-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    background: none;
+}
+.st-preview__content {
+    border-top: 1px dashed gray;
+    border-bottom: 1px dashed gray;
+    padding: 1rem;
+}
+
+.st-preview__code-samples:not([hidden]) {
+    display: flex;
+
+    background: repeating-linear-gradient(
+        -45deg,
+        rgba(0, 0, 0, 0.04),
+        rgba(0, 0, 0, 0.04) 10px,
+        rgba(0, 0, 0, 0.06) 10px,
+        rgba(0, 0, 0, 0.06) 20px
+    );
+    > div {
+        flex: 1;
+    }
+    ::ng-deep .hljs {
+        background: none;
+    }
+    pre {
+        background: none;
+    }
+}

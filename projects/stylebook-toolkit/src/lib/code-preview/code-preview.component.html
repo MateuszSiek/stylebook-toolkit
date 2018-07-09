@@ -1,0 +1,16 @@
+<div class="st-preview">
+  <h2 class="st-preview__title" *ngIf="title">{{title}}</h2>
+  <button class="st-preview--show-preview-button"
+          (click)="toggleCodePreview();">
+    SHOW PREVIEW
+  </button>
+  <div class="st-preview__content">
+    <ng-content></ng-content>
+  </div>
+  <div class="st-preview__code-samples" [hidden]="!showPreview">
+    <div *ngFor="let preview of codePreviewData | async">
+      <h3 class="st-preview__code-samples-title">{{preview.fileExtension}}</h3>
+      <pre><code highlight [code]="preview.sourceCode"></code></pre>
+    </div>
+  </div>
+</div>
