@@ -1,4 +1,4 @@
-<div class="st-preview">
+<div class="st-preview" [attr.id]="getMenuAnchorId()">
   <h2 class="st-preview__title" *ngIf="title">{{title}}</h2>
   <button class="st-preview--show-preview-button"
           (click)="toggleCodePreview();">

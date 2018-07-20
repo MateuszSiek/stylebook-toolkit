@@ -1,14 +1,17 @@
 import { Observable, of } from 'rxjs';
-import { CodePreview } from '../lib/models/code-preview';
+import { CodePreview, CodePreviewMenuItem } from '../lib/models/code-preview';
+import { MockCodePreview, MockMenuItems } from './mock-data';
 
 export class MockCodePreviewService {
     public getSourceCode(): Observable<CodePreview[]> {
         return of(MockCodePreview);
     }
-}
 
-export const MockCodePreview: CodePreview[] = [
-    { fileExtension: 'html', sourceCode: `<h1>Example</h1>` },
-    { fileExtension: 'ts', sourceCode: `class AppComponent {}` },
-    { fileExtension: 'css', sourceCode: `.test{}` }
-];
+    public registerMenuItem(): void {}
+
+    public unregisterMenuItem(): void {}
+
+    public getMenuItems(): Observable<CodePreviewMenuItem[]> {
+        return of(MockMenuItems);
+    }
+}
