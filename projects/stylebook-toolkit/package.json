@@ -1,6 +1,6 @@
 {
     "name": "stylebook-toolkit",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Library with Angular components for creating stylebooks",
     "homepage": "https://github.com/MateuszSiek/stylebook-toolkit#readme",
     "repository": {
