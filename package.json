@@ -1,9 +1,9 @@
 {
   "name": "stylebook-toolkit-app",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4600",
+    "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --prod stylebook-toolkit-app",
     "build:lib": "ng build --prod stylebook-toolkit",
@@ -11,6 +11,7 @@
     "test": "ng test stylebook-toolkit",
     "lint": "prettier --config .prettierrc --list-different 'projects/**/*.{js,ts,json}' && echo 'prettier OK, doing ng lint...' && ng lint",
     "lint:fix": "prettier --config .prettierrc --write 'projects/**/*.{js,ts,json}'",
+    "release": "standard-version",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -26,6 +27,7 @@
     "@angular/router": "6.0.3",
     "core-js": "2.5.4",
     "rxjs": "6.0.0",
+    "standard-version": "^4.4.0",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
