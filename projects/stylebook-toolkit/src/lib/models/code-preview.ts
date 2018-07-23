@@ -10,7 +10,7 @@ export interface StCodePreviewConfig {
 }
 
 export interface CodePreviewMenuItem {
-  menuId: string;
-  label: string;
-  link: string;
+    menuId: string;
+    label: string;
+    link: string;
 }

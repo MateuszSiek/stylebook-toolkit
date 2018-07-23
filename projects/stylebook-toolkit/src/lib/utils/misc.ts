@@ -4,7 +4,7 @@ export function removeDuplicates<T>(arr: T[], key: any): T[] {
         if (!obj[arr[i][key]]) obj[arr[i][key]] = arr[i];
     }
     const newArr = [];
-    for (const key in obj) newArr.push(obj[key]);
+    for (const k in obj) newArr.push(obj[k]);
     return newArr;
 }
 

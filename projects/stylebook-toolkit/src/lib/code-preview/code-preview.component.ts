@@ -5,7 +5,7 @@ import { take } from 'rxjs/operators';
 import { CodePreviewService } from '../services/code-preview.service';
 import { CodePreview, StCodePreviewConfig } from '../models/code-preview';
 import { stringToAnchorLink } from '../utils/misc';
-import { ST_CONFIG_TOKEN } from '../../config';
+import { ST_CONFIG_TOKEN } from '../config';
 
 @Component({
     selector: 'st-code-preview',

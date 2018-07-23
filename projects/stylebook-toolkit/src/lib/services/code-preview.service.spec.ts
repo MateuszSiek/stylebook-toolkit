@@ -4,7 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CodePreviewService } from './code-preview.service';
 import { CodePreview, CodePreviewMenuItem } from '../models/code-preview';
 import { of } from 'rxjs';
-import { ST_CONFIG_TOKEN } from '../../config';
+import { ST_CONFIG_TOKEN } from '../config';
 import { stringToAnchorLink } from '../utils/misc';
 
 describe('CodePreviewService', () => {

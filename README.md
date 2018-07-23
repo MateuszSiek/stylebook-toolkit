@@ -1,5 +1,7 @@
 # StylebookToolkitApp
 
+[![CircleCI](https://circleci.com/gh/MateuszSiek/stylebook-toolkit.svg?style=svg)](https://circleci.com/gh/MateuszSiek/stylebook-toolkit)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
 
 ## Development server

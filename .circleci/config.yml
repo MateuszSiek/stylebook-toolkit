@@ -1,0 +1,97 @@
+version: 2
+jobs:
+
+  init:
+    docker:
+      - image: mateuszsiek/nodejs-chrome
+    steps:
+        - checkout
+        - restore_cache:
+            key: v1-dependencies-{{ checksum "yarn.lock" }}
+
+        - run:
+            name: Show current branch
+            command: echo ${CIRCLE_BRANCH}
+
+        - run:
+            name: Install local dependencies
+            command: yarn
+        - save_cache:
+            key: v1-dependencies-{{ checksum "yarn.lock" }}
+            paths:
+                - node_modules
+
+  unit-test:
+    docker:
+      - image: mateuszsiek/nodejs-chrome
+    steps:
+        - checkout
+        - restore_cache:
+            key: v1-dependencies-{{ checksum "yarn.lock" }}
+        - run:
+            name: Unit tests
+            command: yarn test:ci
+        - run:
+            name: Coverage
+            command: yarn coverage
+
+  build-lib:
+    docker:
+      - image: mateuszsiek/nodejs-chrome
+    steps:
+        - checkout
+        - restore_cache:
+            key: v1-dependencies-{{ checksum "yarn.lock" }}
+        - run:
+            name: Building library
+            command: yarn build:lib
+        - save_cache:
+            key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            paths:
+                - dist
+
+  build-demo-app:
+      docker:
+        - image: mateuszsiek/nodejs-chrome
+      steps:
+          - checkout
+          - restore_cache:
+              key: v1-dependencies-{{ checksum "yarn.lock" }}
+          - restore_cache:
+              key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          - run:
+              name: Building demo app
+              command: yarn build:prod
+
+  additional-checks:
+      docker:
+          - image: mateuszsiek/nodejs-chrome
+      steps:
+          - checkout
+          - restore_cache:
+              key: v1-dependencies-{{ checksum "yarn.lock" }}
+          - run:
+              name: Check linting
+              command: yarn lint
+
+workflows:
+    version: 2
+    build_and_test:
+        jobs:
+            - init
+
+            - unit-test:
+                requires:
+                    - init
+
+            - build-lib:
+                requires:
+                    - init
+
+            - build-demo-app:
+                requires:
+                    - build-lib
+
+            - additional-checks:
+                requires:
+                    - init
