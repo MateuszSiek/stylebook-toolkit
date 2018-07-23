@@ -1,0 +1,13 @@
+.flex {
+    display: flex;
+    .menu {
+        flex: 1;
+    }
+    .preview {
+        flex: 4;
+    }
+}
+.st-code-preview {
+    display: block;
+    margin-bottom: 10rem;
+}

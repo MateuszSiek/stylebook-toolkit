@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4600",
     "build": "ng build",
+    "build:prod": "ng build --prod stylebook-toolkit-app",
     "build:lib": "ng build --prod stylebook-toolkit",
     "build:lib:watch": "onchange 'projects/stylebook-toolkit/**/*.{ts,scss,html}' -- npm run build:lib",
     "test": "ng test stylebook-toolkit",

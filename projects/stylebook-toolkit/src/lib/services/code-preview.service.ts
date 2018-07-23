@@ -1,18 +1,43 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { forkJoin, Observable, of } from 'rxjs';
-import { CodePreview, StCodePreviewConfig } from '../models/code-preview';
-import { catchError, map } from 'rxjs/operators';
-import { CONFIG } from '../stylebook-toolkit.module';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, take } from 'rxjs/operators';
+
+import { CodePreview, CodePreviewMenuItem, StCodePreviewConfig } from '../models/code-preview';
+import { extractHtml, extractTs } from '../utils/code-parsing';
+import { removeDuplicates, stringToAnchorLink } from '../utils/misc';
+import { ST_CONFIG_TOKEN } from '../../config';
+
+const DefaultMenuId: string = 'ST_MENU_DEFAULT';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CodePreviewService {
-    private config: StCodePreviewConfig;
+    public menuItems: BehaviorSubject<CodePreviewMenuItem[]> = new BehaviorSubject([]);
 
-    constructor(private http: HttpClient, @Inject(CONFIG) config: StCodePreviewConfig) {
-        this.config = config;
+    constructor(private http: HttpClient, @Inject(ST_CONFIG_TOKEN) private config: StCodePreviewConfig) {}
+
+    public registerMenuItem(menuItem: string, menuId: string = DefaultMenuId): void {
+        const menuItems = this.getMenuItemsSnapshot();
+        const newMenuItem = { menuId, label: menuItem, link: stringToAnchorLink(menuItem) };
+        this.menuItems.next([...menuItems, newMenuItem]);
+    }
+
+    public unregisterMenuItem(menuItem: string, menuId: string = DefaultMenuId): void {
+        const menuItems = this.getMenuItemsSnapshot().filter(
+            (item: CodePreviewMenuItem) => !(item.menuId === menuId && item.label === menuItem)
+        );
+        this.menuItems.next(menuItems);
+    }
+
+    public getMenuItems(menuId: string = DefaultMenuId): Observable<CodePreviewMenuItem[]> {
+        return this.menuItems
+            .asObservable()
+            .pipe(
+                map((items: CodePreviewMenuItem[]) => items.filter((item: CodePreviewMenuItem) => item.menuId === menuId)),
+                map((items: CodePreviewMenuItem[]) => removeDuplicates<CodePreviewMenuItem>(items, 'label'))
+            );
     }
 
     public getSourceCode(
@@ -50,6 +75,12 @@ export class CodePreviewService {
         return input;
     }
 
+    private getMenuItemsSnapshot(): CodePreviewMenuItem[] {
+        let menuItems: CodePreviewMenuItem[] = [];
+        this.menuItems.pipe(take(1)).subscribe((m: CodePreviewMenuItem[]) => (menuItems = m));
+        return menuItems;
+    }
+
     private handleError(error: HttpErrorResponse): Observable<string> {
         if (error.status === 404) {
             console.error(`Could not load requested file make sure you provide valid component inputs;`, error.message);
@@ -60,34 +91,4 @@ export class CodePreviewService {
         }
         return of('');
     }
-}
-
-export function extractHtml(text: string, selectId?: string): string | undefined {
-    let regExp;
-    if (selectId) {
-        regExp = new RegExp(`<st-code-preview(.*?)${selectId}(.*?)>(.*?)</st-code-preview>`, 'gs');
-    } else {
-        regExp = new RegExp('<st-code-preview(.*?)>(.*?)</st-code-preview>', 'gs');
-    }
-    const htmlMatch = regExp.exec(text);
-    return htmlMatch && htmlMatch[htmlMatch.length - 1];
-}
-
-export function extractHtmlComments(text: string, selectId?: string): string[] {
-    const html = extractHtml(text, selectId);
-    const regExp = new RegExp(`<!--((.|\n|\t|\r)*?)-->`, 'gs');
-    return (html.match(regExp) || []).map((comment: string) => {
-        return comment
-            .replace('<!--', '')
-            .replace('-->', '')
-            .replace(/ +(?= )/g, '')
-            .trim();
-    });
-}
-
-export function extractTs(text: string): string | undefined {
-    if (!text) return undefined;
-    const regExp = new RegExp(`export (.*?)$`, 'gs');
-    const tsMatch = regExp.exec(text);
-    return tsMatch ? tsMatch[1] : text;
 }

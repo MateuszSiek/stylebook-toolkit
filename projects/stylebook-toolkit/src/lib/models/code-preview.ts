@@ -3,8 +3,14 @@ export interface CodePreview {
     sourceCode: string;
 }
 
-export class StCodePreviewConfig {
-    public fileExtensions: string[] = ['html', 'ts', 'scss'];
-    public lazyLoad: boolean = true;
-    public fileSubName?: string = 'component';
+export interface StCodePreviewConfig {
+    fileExtensions: string[];
+    lazyLoad: boolean;
+    fileSubName?: string;
+}
+
+export interface CodePreviewMenuItem {
+  menuId: string;
+  label: string;
+  link: string;
 }
