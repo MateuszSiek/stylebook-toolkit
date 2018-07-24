@@ -11,3 +11,11 @@
     display: block;
     margin-bottom: 10rem;
 }
+
+.menu {
+    min-width: 10rem;
+    > div {
+      position: fixed;
+      margin: 1rem 0;
+    }
+}

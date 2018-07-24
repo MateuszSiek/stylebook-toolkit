@@ -1,53 +1,18 @@
+
+<div>
+  <a [routerLink]="['']">Page one </a>
+</div>
+<div>
+  <a [routerLink]="['page-two']">Page two </a>
+</div>
 <div class="flex">
   <div class="menu">
-    <st-code-preview-menu [menuId]="'menu-1'"></st-code-preview-menu>
-    <st-code-preview-menu></st-code-preview-menu>
+    <div>
+      <st-code-preview-menu></st-code-preview-menu>
+      <st-code-preview-menu [menuId]="'menu-1'"></st-code-preview-menu>
+    </div>
   </div>
   <div class="preview">
-    <st-code-preview [title]="'Buttons'" [src]="'app'"
-                     [componentName]="'app'"
-                     [config]="{fileExtensions:['html']}"
-                     [menuItem]="true"
-                     [id]="'example-1'">
-      <h1> Some example buttons</h1>
-      <button>test</button>
-      <button class="example">test1</button>
-      <button class="example">test2</button>
-      <button class="example" *ngIf="false">test3</button>
-      <button class="example">test1</button>
-      <button class="example">test2</button>
-      <button class="example" *ngIf="false">test3</button>
-    </st-code-preview>
-
-    <st-code-preview [title]="'Select'" [src]="'app'" [componentName]="'app'" [menuItem]="true" [menuId]="'menu-1'" [id]="'example-2'">
-      <select name="cars">
-        <option [value]="car" *ngFor="let car of cars">{{car}}</option>
-      </select>
-      <br><br>
-      <select name="cars" size="4" multiple>
-        <option [value]="car" *ngFor="let car of cars">{{car}}</option>
-      </select>
-      <br><br>
-      <input list="browsers" name="browser">
-      <datalist id="browsers">
-        <option [value]="browser" *ngFor="let browser of browsers">
-      </datalist>
-    </st-code-preview>
-
-    <st-code-preview [title]="'Text inputs'" [src]="'app'" [componentName]="'app'" [menuItem]="true" [id]="'example-3'">
-      <input type="text" name="lname">
-      <br><br>
-      <textarea name="message" rows="4" cols="30">
-  The cat was playing in the garden.
-  </textarea>
-    </st-code-preview>
-
-    <st-code-preview [title]="'Radio input'" [src]="'app'" [componentName]="'app'" [id]="'example-4'" [menuItem]="true" [menuId]="'menu-1'">
-      <input type="radio" name="gender" value="male" checked> Male<br>
-      <input type="radio" name="gender" value="female"> Female<br>
-      <input type="radio" name="gender" value="other"> Other
-    </st-code-preview>
+    <router-outlet></router-outlet>
   </div>
-
-
 </div>

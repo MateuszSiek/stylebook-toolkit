@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -11,12 +11,11 @@ import { ST_CONFIG_TOKEN } from '../config';
     selector: 'st-code-preview',
     templateUrl: './code-preview.component.html',
     styleUrls: ['./code-preview.component.scss'],
-    host: {
-        '[class]': 'classNames'
-    },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CodePreviewComponent implements OnInit, OnDestroy {
+    @HostBinding('attr.class') public hostClass: string = '';
+
     @Input() public title: string = '';
     @Input() public src: string = '';
     @Input() public componentName: string = '';
@@ -24,8 +23,6 @@ export class CodePreviewComponent implements OnInit, OnDestroy {
     @Input() public config: Partial<StCodePreviewConfig> = {};
     @Input() public menuItem: boolean = false;
     @Input() public menuId?: string;
-
-    public classNames: string = '';
 
     public showPreview: boolean = false;
 
@@ -46,7 +43,7 @@ export class CodePreviewComponent implements OnInit, OnDestroy {
             this.codePreviewService.registerMenuItem(this.title, this.menuId);
         }
         const uniqueId = this.id ? `st-code-preview__${this.id}` : '';
-        this.classNames = `st-code-preview ${uniqueId}`;
+        this.hostClass = `st-code-preview ${uniqueId}`;
     }
 
     public ngOnDestroy(): void {

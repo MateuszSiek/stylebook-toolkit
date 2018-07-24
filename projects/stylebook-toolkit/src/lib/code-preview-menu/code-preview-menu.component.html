@@ -1,5 +1,10 @@
 <ul class="st-preview-menu__list">
   <li class="st-preview-menu__list-item" *ngFor="let item of menuItems | async">
-    <a class="st-preview-menu__list-link" [href]="'#'+item.link">{{item.label}}</a>
+    <a class="st-preview-menu__list-link"
+       [routerLink]=""
+       [fragment]="item.link"
+       (click)="scrollToViewElement(item.link)">
+      {{item.label}}
+    </a>
   </li>
 </ul>
