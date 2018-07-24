@@ -1,15 +1,22 @@
-
 export function extractHtml(text: string, selectId?: string): string | undefined {
-  let regExp;
-  if (selectId) {
-    regExp = new RegExp(`<st-code-preview(.*?)${selectId}(.*?)>(.*?)</st-code-preview>`, 'gs');
-  } else {
-    regExp = new RegExp('<st-code-preview(.*?)>(.*?)</st-code-preview>', 'gs');
-  }
-  const htmlMatch = regExp.exec(text);
-  return htmlMatch && htmlMatch[htmlMatch.length - 1];
+    let regExp;
+    if (selectId) {
+        regExp = new RegExp(`<st-code-preview(.*?)${selectId}(.*?)>(.*?)</st-code-preview>`, 'gs');
+    } else {
+        regExp = new RegExp('<st-code-preview(.*?)>(.*?)</st-code-preview>', 'gs');
+    }
+    const htmlMatch = regExp.exec(text);
+    return htmlMatch && htmlMatch[htmlMatch.length - 1];
 }
 
+export function extractTs(text: string): string | undefined {
+    if (!text) return undefined;
+    const regExp = new RegExp(`export (.*?)$`, 'gs');
+    const tsMatch = regExp.exec(text);
+    return tsMatch ? tsMatch[1] : text;
+}
+
+/* CURRENTLY UNUSED
 export function extractHtmlComments(text: string, selectId?: string): string[] {
   const html = extractHtml(text, selectId);
   const regExp = new RegExp(`<!--((.|\n|\t|\r)*?)-->`, 'gs');
@@ -21,10 +28,4 @@ export function extractHtmlComments(text: string, selectId?: string): string[] {
       .trim();
   });
 }
-
-export function extractTs(text: string): string | undefined {
-  if (!text) return undefined;
-  const regExp = new RegExp(`export (.*?)$`, 'gs');
-  const tsMatch = regExp.exec(text);
-  return tsMatch ? tsMatch[1] : text;
-}
+*/

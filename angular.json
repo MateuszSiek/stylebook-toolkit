@@ -55,7 +55,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "stylebook-toolkit-app:build"
+            "browserTarget": "stylebook-toolkit-app:build",
+            "port": 4600
           },
           "configurations": {
             "production": {
@@ -94,7 +95,8 @@
               "projects/stylebook-toolkit-demo/tsconfig.spec.json"
             ],
             "exclude": [
-              "**/node_modules/**"
+              "**/node_modules/**",
+              "**/e2e/**"
             ]
           }
         }
@@ -121,7 +123,8 @@
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
-              "**/node_modules/**"
+              "**/node_modules/**",
+              "**/e2e/**"
             ]
           }
         }
@@ -166,7 +169,8 @@
               "projects/stylebook-toolkit/tsconfig.spec.json"
             ],
             "exclude": [
-              "**/node_modules/**"
+              "**/node_modules/**",
+              "**/e2e/**"
             ]
           }
         }

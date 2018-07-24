@@ -6,7 +6,7 @@ import { catchError, map, take } from 'rxjs/operators';
 import { CodePreview, CodePreviewMenuItem, StCodePreviewConfig } from '../models/code-preview';
 import { extractHtml, extractTs } from '../utils/code-parsing';
 import { removeDuplicates, stringToAnchorLink } from '../utils/misc';
-import { ST_CONFIG_TOKEN } from '../../config';
+import { ST_CONFIG_TOKEN } from '../config';
 
 const DefaultMenuId: string = 'ST_MENU_DEFAULT';
 
@@ -32,12 +32,10 @@ export class CodePreviewService {
     }
 
     public getMenuItems(menuId: string = DefaultMenuId): Observable<CodePreviewMenuItem[]> {
-        return this.menuItems
-            .asObservable()
-            .pipe(
-                map((items: CodePreviewMenuItem[]) => items.filter((item: CodePreviewMenuItem) => item.menuId === menuId)),
-                map((items: CodePreviewMenuItem[]) => removeDuplicates<CodePreviewMenuItem>(items, 'label'))
-            );
+        return this.menuItems.asObservable().pipe(
+            map((items: CodePreviewMenuItem[]) => items.filter((item: CodePreviewMenuItem) => item.menuId === menuId)),
+            map((items: CodePreviewMenuItem[]) => removeDuplicates<CodePreviewMenuItem>(items, 'label'))
+        );
     }
 
     public getSourceCode(

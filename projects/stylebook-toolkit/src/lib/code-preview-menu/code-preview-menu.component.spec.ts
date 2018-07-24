@@ -7,19 +7,17 @@ import { MockCodePreviewService } from '../../testing/code-preview.service';
 import { CodePreviewMenuItem } from '../models/code-preview';
 import { MockMenuItems } from '../../testing/mock-data';
 
-describe('CodePreviewMenuComponent', function() {
+describe('CodePreviewMenuComponent', () => {
     let component: CodePreviewMenuComponent;
     let fixture: ComponentFixture<CodePreviewMenuComponent>;
 
-    beforeEach(
-        async(() => {
-            TestBed.configureTestingModule({
-                imports: [HttpClientModule, HttpClientTestingModule],
-                declarations: [CodePreviewMenuComponent],
-                providers: [{ provide: CodePreviewService, useClass: MockCodePreviewService }]
-            }).compileComponents();
-        })
-    );
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientModule, HttpClientTestingModule],
+            declarations: [CodePreviewMenuComponent],
+            providers: [{ provide: CodePreviewService, useClass: MockCodePreviewService }]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CodePreviewMenuComponent);
